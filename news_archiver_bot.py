@@ -63,6 +63,6 @@ for submission in hreddit_object.new(limit=20):
                 print(archived_post_url)
                 submission.reply(
                     '''[Archive.org link, ako ne zelite davati klikove ovom portalu]({})
-                    \n\n***\n\n
+                    \n\n
                     ^(Ja sam bot, ako imate prigovora slobodno PMate u/skuxy)'''
                     .format(archived_post_url))
