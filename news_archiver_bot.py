@@ -38,7 +38,14 @@ for submission in hreddit_object.new(limit=20):
         save_post_to_archive_url = \
             "https://web.archive.org/save/{}".format(original_url)
 
-        save_post_response = requests.get(save_post_to_archive_url)
+        retry_count = 0
+
+        while retry_count < 3:
+            save_post_response = requests.get(save_post_to_archive_url)
+            if save_post_response == 200:
+                break
+
+            retry_count += 1
 
         if save_post_response.status_code == 200:
             archived_post_json = \
@@ -56,6 +63,6 @@ for submission in hreddit_object.new(limit=20):
                 print(archived_post_url)
                 submission.reply(
                     '''[Archive.org link, ako ne zelite davati klikove ovom portalu]({})
-                    ***
+                    \n\n***\n\n
                     ^(Ja sam bot, ako imate prigovora slobodno PMate u/skuxy)'''
                     .format(archived_post_url))
